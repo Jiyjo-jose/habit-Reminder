@@ -1,0 +1,187 @@
+{
+	"info": {
+		"_postman_id": "0b366c22-9149-452a-b93e-15ddd326b73d",
+		"name": "Habit-Tracker",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "30424741"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/timer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \n    \"id\":2,\n    \"habitId\":2,\n    \"name\":\"breakfast\",\n    \"interval\":345667,\n    \"startTime\":\"14:29\"\n    \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/timer"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/habit/create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \"habitId\":2,\n      \"description\":\"excercise on time\"\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/habit/create"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/habit/1",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \n    \"habitId\":1,\n    \"description\": \"eating on correct time\"\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/habit/1"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/habit/1",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \n    \"habitId\":2,\n    \"description\": \"eating on correct time\"\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/habit/2"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/habit/view",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/habit/view"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/habit/2",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/habit/2"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/habit/3/done",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/habit/3/done"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/timer/2/timers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/timer/2/timers"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/timer/2/timers/2",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/timer/2/timers/2"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/timer/2/timers/2",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"dinner\",\n    \"interval\":543323,\n    \"startTime\":\"11:11\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/timer/2/timers/2"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/timer/2/timers/5",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "http://localhost:8080/timer/2/timers/5"
+			},
+			"response": []
+		}
+	]
+}
