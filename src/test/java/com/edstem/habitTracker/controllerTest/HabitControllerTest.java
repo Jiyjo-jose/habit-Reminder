@@ -35,7 +35,7 @@ public class HabitControllerTest {
     private HabitController habitController;
     @Test
     void testCreateHabit() {
-        CreateHabitRequest request = new CreateHabitRequest(1L, "Some description");
+        CreateHabitRequest request = new CreateHabitRequest(1L, "test");
         Habit habit = new Habit(1L,"test",false,new ArrayList<>(1));
         CreateHabitResponse response = new CreateHabitResponse(1L, "Test Habit");
 

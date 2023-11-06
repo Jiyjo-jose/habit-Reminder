@@ -126,7 +126,7 @@ class TimerServiceTest {
     @Test
     void testUpdateTimer() {
         when(modelMapper.map(Mockito.<Object>any(), Mockito.<Class<TimerResponse>>any()))
-                .thenReturn(TimerResponse.builder().id(1L).interval(null).name("Name").startTime("Start Time").build());
+                .thenReturn(TimerResponse.builder().id(1L).interval(null).name("test").startTime("10:30").build());
 
         Habit habit = new Habit();
         habit.setDescription("Test");
@@ -137,8 +137,8 @@ class TimerServiceTest {
         Timer timer = new Timer();
         timer.setHabit(habit);
         timer.setId(1L);
-        timer.setName("Name");
-        timer.setStartTime("Start Time");
+        timer.setName("test");
+        timer.setStartTime("10:30");
         Optional<Timer> ofResult = Optional.of(timer);
 
         Habit habit2 = new Habit();
@@ -150,7 +150,7 @@ class TimerServiceTest {
         Timer timer2 = new Timer();
         timer2.setHabit(habit2);
         timer2.setId(1L);
-        timer2.setName("Name");
+        timer2.setName("test");
         timer2.setStartTime("10:30");
         when(timerRepository.save(Mockito.<Timer>any())).thenReturn(timer2);
         when(timerRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
