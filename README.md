@@ -27,19 +27,19 @@ The Habit Tracker Application is a versatile tool designed to help you establish
 - **Description:** Retrieve a list of all habits.
 
 ### Get Habit by ID
-- **Endpoint:** `/habit//{habitId}`
+- **Endpoint:** `/habit/view/{habitId}`
 - **Method:** GET
 - **Description:** Retrieve a specific habit's details by its ID.
 
 
 ### Update Habit
-- **Endpoint:** `/habit/{habitId}`
+- **Endpoint:** `/habit/update/{habitId}`
 - **Method:** PATCH
 - **Description:** Update an existing habit's details.
 
 
 ### Delete Habit
-- **Endpoint:** `/habit/{habitId}`
+- **Endpoint:** `/habit/delete/{habitId}`
 - **Method:** DELETE
 - **Description:** Delete a specific habit by its ID.
 
@@ -48,31 +48,31 @@ The Habit Tracker Application is a versatile tool designed to help you establish
 - **Method:** POST
 - **Description:** Mark a habit as done, tracking its completion.
 
-### Create Timer 
+### Create Timer
 - **Endpoint:** `/timer/{habitId}/timers`
 - **Method:** POST
 - **Description:** Create a new timer associated with a specific habit.
 
 
 ### List Timers
-- **Endpoint:** `/timer{habitId}/timers`
+- **Endpoint:** `/timer/{habitId}/viewAllTimers`
 - **Method:** GET
 - **Description:** Retrieve a list of all timers.
 
 ### Get Timer by ID
-- **Endpoint:** `/timer/{habitId}/timers/{timerId}`
+- **Endpoint:** `/timer/{habitId}/viewTimer/{timerId}`
 - **Method:** GET
 - **Description:** Retrieve a specific timer's details by its ID.
 
 
 ### Update Timer
-- **Endpoint:** `/timer/{habitId}/timers/{timerId}`
+- **Endpoint:** `/timer/{habitId}/updateTimer/{timerId}`
 - **Method:** PATCH
 - **Description:** Update an existing timer's details.
 
 
 ### Delete Timer
-- **Endpoint:** `/timer/{habitId}/timers/{timerId}`
+- **Endpoint:** `/timer/{habitId}/deleteTimer/{timerId}`
 - **Method:** DELETE
 - **Description:** Delete a specific timer by its ID.
 
@@ -83,4 +83,3 @@ The Habit Tracker Application is a versatile tool designed to help you establish
 1. Clone the repository to your local machine:https://github.com/Jiyjo-jose/habit-tracker.
 2. Open the project.
 3. Ensure you have Java and Maven installed.
-

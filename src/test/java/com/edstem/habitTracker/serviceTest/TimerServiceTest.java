@@ -1,44 +1,38 @@
 package com.edstem.habitTracker.serviceTest;
 
-import com.edstem.habitTracker.contract.Response.TimerResponse;
-import com.edstem.habitTracker.service.TimerService;
-import org.mockito.Mockito;
-import org.springframework.boot.test.context.SpringBootTest;
-
-
-import com.edstem.habitTracker.contract.Request.TimerRequest;
-import com.edstem.habitTracker.model.Habit;
-import com.edstem.habitTracker.model.Timer;
-import com.edstem.habitTracker.repository.HabitRepository;
-import com.edstem.habitTracker.repository.TimerRepository;
-import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.modelmapper.ModelMapper;
-
-import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import com.edstem.habitTracker.contract.Request.TimerRequest;
+import com.edstem.habitTracker.contract.Response.TimerResponse;
+import com.edstem.habitTracker.model.Habit;
+import com.edstem.habitTracker.model.Timer;
+import com.edstem.habitTracker.repository.HabitRepository;
+import com.edstem.habitTracker.repository.TimerRepository;
+import com.edstem.habitTracker.service.TimerService;
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.modelmapper.ModelMapper;
+import org.springframework.boot.test.context.SpringBootTest;
+
 @SpringBootTest
 class TimerServiceTest {
-    @Mock
-    private HabitRepository habitRepository;
+    @Mock private HabitRepository habitRepository;
 
-    @Mock
-    private TimerRepository timerRepository;
+    @Mock private TimerRepository timerRepository;
 
-    @Mock
-    private ModelMapper modelMapper;
+    @Mock private ModelMapper modelMapper;
 
-    @InjectMocks
-    private TimerService timerService;
+    @InjectMocks private TimerService timerService;
 
     @Test
     void testCreateTimer() {
@@ -54,7 +48,8 @@ class TimerServiceTest {
         timer.setName("test");
         timer.setStartTime("Start Time");
         when(modelMapper.map(Mockito.<Object>any(), Mockito.<Class<Timer>>any())).thenReturn(timer);
-        when(timerRepository.save(Mockito.<Timer>any())).thenThrow(new RuntimeException("exception"));
+        when(timerRepository.save(Mockito.<Timer>any()))
+                .thenThrow(new RuntimeException("exception"));
 
         Habit habit2 = new Habit();
         habit2.setDescription("test2");
@@ -63,8 +58,11 @@ class TimerServiceTest {
         habit2.setTimers(new ArrayList<>());
         Optional<Habit> ofResult = Optional.of(habit2);
         when(habitRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
-        assertThrows(RuntimeException.class,
-                () -> timerService.createTimer(1L, new TimerRequest(1L, "test", null, "Start Time")));
+        assertThrows(
+                RuntimeException.class,
+                () ->
+                        timerService.createTimer(
+                                1L, new TimerRequest(1L, "test", null, "Start Time")));
         verify(modelMapper).map(Mockito.<Object>any(), Mockito.<Class<Timer>>any());
         verify(habitRepository).findById(Mockito.<Long>any());
         verify(timerRepository).save(Mockito.<Timer>any());
@@ -94,10 +92,17 @@ class TimerServiceTest {
         when(habitRepository.findById(habitId)).thenReturn(Optional.empty());
         assertThrows(RuntimeException.class, () -> timerService.getAllTimers(habitId));
     }
+
     @Test
     void testGetTimerById() {
         when(modelMapper.map(Mockito.<Object>any(), Mockito.<Class<TimerResponse>>any()))
-                .thenReturn(TimerResponse.builder().id(1L).interval(null).name("test").startTime("10:30").build());
+                .thenReturn(
+                        TimerResponse.builder()
+                                .id(1L)
+                                .interval(null)
+                                .name("test")
+                                .startTime("10:30")
+                                .build());
 
         Habit habit = new Habit();
         habit.setDescription("Test");
@@ -116,6 +121,7 @@ class TimerServiceTest {
         verify(modelMapper).map(Mockito.<Object>any(), Mockito.<Class<TimerResponse>>any());
         verify(timerRepository).findById(Mockito.<Long>any());
     }
+
     @Test
     void testGetTimerByIdTimerNotFound() {
 
@@ -123,10 +129,17 @@ class TimerServiceTest {
         when(timerRepository.findById(timerId)).thenReturn(Optional.empty());
         assertThrows(RuntimeException.class, () -> timerService.getTimerById(timerId));
     }
+
     @Test
     void testUpdateTimer() {
         when(modelMapper.map(Mockito.<Object>any(), Mockito.<Class<TimerResponse>>any()))
-                .thenReturn(TimerResponse.builder().id(1L).interval(null).name("test").startTime("10:30").build());
+                .thenReturn(
+                        TimerResponse.builder()
+                                .id(1L)
+                                .interval(null)
+                                .name("test")
+                                .startTime("10:30")
+                                .build());
 
         Habit habit = new Habit();
         habit.setDescription("Test");
@@ -168,24 +181,30 @@ class TimerServiceTest {
         verify(timerRepository).findById(Mockito.<Long>any());
         verify(timerRepository).save(Mockito.<Timer>any());
     }
+
     @Test
     void testUpdateTimerExceptions() {
         Long habitId = 1L;
         Long timerId = 1L;
-        TimerRequest timerRequest = new TimerRequest(1L, "updatedName", Duration.ofHours(5), "12:00");
-        when(habitRepository.findById(habitId)).thenThrow(new RuntimeException("Habit not found with id: " + habitId));
-        when(timerRepository.findById(timerId)).thenThrow(new RuntimeException("Timer not found with id: " + timerId));
-        assertThrows(RuntimeException.class, () -> timerService.updateTimer(habitId, timerId, timerRequest));
+        TimerRequest timerRequest =
+                new TimerRequest(1L, "updatedName", Duration.ofHours(5), "12:00");
+        when(habitRepository.findById(habitId))
+                .thenThrow(new RuntimeException("Habit not found with id: " + habitId));
+        when(timerRepository.findById(timerId))
+                .thenThrow(new RuntimeException("Timer not found with id: " + timerId));
+        assertThrows(
+                RuntimeException.class,
+                () -> timerService.updateTimer(habitId, timerId, timerRequest));
     }
+
     @Test
     void testDeleteTimer() {
         long habitId = 1L;
         long timerId = 1L;
-        Habit habit = new Habit(1L,"test",false,new ArrayList<>(1));
-        Timer timer = new Timer(1L,"test",null,"10:30",habit);
+        Habit habit = new Habit(1L, "test", false, new ArrayList<>(1));
+        Timer timer = new Timer(1L, "test", null, "10:30", habit);
         when(habitRepository.findById(habitId)).thenReturn(Optional.of(habit));
         when(timerRepository.findById(timerId)).thenReturn(Optional.of(timer));
         assertDoesNotThrow(() -> timerService.deleteTimer(habitId, timerId));
     }
 }
-

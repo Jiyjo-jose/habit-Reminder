@@ -1,6 +1,5 @@
 package com.edstem.habitTracker;
 
-
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -8,8 +7,5 @@ import org.springframework.boot.test.context.SpringBootTest;
 class HabitTrackerApplicationTests {
 
     @Test
-    void contextLoads() {
-    }
-
+    void contextLoads() {}
 }
-

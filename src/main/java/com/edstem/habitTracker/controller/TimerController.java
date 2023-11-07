@@ -3,8 +3,8 @@ package com.edstem.habitTracker.controller;
 import com.edstem.habitTracker.contract.Request.TimerRequest;
 import com.edstem.habitTracker.contract.Response.TimerResponse;
 import com.edstem.habitTracker.service.TimerService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,47 +16,46 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
-    @RequestMapping("/timer")
-    @RequiredArgsConstructor
-    public class TimerController {
+@RequestMapping("/timer")
+@RequiredArgsConstructor
+public class TimerController {
 
-        private final TimerService timerService;
-        private final ModelMapper modelMapper;
-        @PostMapping("/{habitId}/timers")
-        public ResponseEntity<TimerResponse> createTimer(@PathVariable Long habitId, @RequestBody TimerRequest timerRequest) {
-            TimerResponse timerResponse = timerService.createTimer(habitId, timerRequest);
-            return new ResponseEntity<>(timerResponse, HttpStatus.CREATED);
-        }
+    private final TimerService timerService;
+
+    @PostMapping("/{habitId}/timers")
+    public ResponseEntity<TimerResponse> createTimer(
+            @PathVariable Long habitId, @RequestBody TimerRequest timerRequest) {
+        TimerResponse timerResponse = timerService.createTimer(habitId, timerRequest);
+        return new ResponseEntity<>(timerResponse, HttpStatus.CREATED);
+    }
 
     @GetMapping("/{habitId}/viewAllTimers")
     public ResponseEntity<List<TimerResponse>> getAllTimers(@PathVariable Long habitId) {
         List<TimerResponse> timerResponses = timerService.getAllTimers(habitId);
         return new ResponseEntity<>(timerResponses, HttpStatus.OK);
     }
+
     @GetMapping("/{habitId}/viewTimer/{timerId}")
     public ResponseEntity<TimerResponse> getTimerById(@PathVariable Long timerId) {
         TimerResponse timerResponse = timerService.getTimerById(timerId);
         return new ResponseEntity<>(timerResponse, HttpStatus.OK);
     }
+
     @PatchMapping("/{habitId}/updateTimer/{timerId}")
     public ResponseEntity<TimerResponse> updateTimer(
             @PathVariable Long habitId,
             @PathVariable Long timerId,
-            @RequestBody TimerRequest timerRequest
-    ) {
+            @RequestBody TimerRequest timerRequest) {
         TimerResponse updatedTimer = timerService.updateTimer(habitId, timerId, timerRequest);
         return new ResponseEntity<>(updatedTimer, HttpStatus.OK);
     }
+
     @DeleteMapping("/{habitId}/deleteTimer/{timerId}")
-    public ResponseEntity<String> deleteTimer(@PathVariable Long habitId, @PathVariable Long timerId) {
+    public ResponseEntity<String> deleteTimer(
+            @PathVariable Long habitId, @PathVariable Long timerId) {
         timerService.deleteTimer(habitId, timerId);
-        return new ResponseEntity<>("Timer with id " + timerId + " has been deleted", HttpStatus.OK);
+        return new ResponseEntity<>(
+                "Timer with id " + timerId + " has been deleted", HttpStatus.OK);
     }
-    }
-
-
-
-
+}

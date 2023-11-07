@@ -6,11 +6,12 @@ import com.edstem.habitTracker.model.Habit;
 import com.edstem.habitTracker.model.Timer;
 import com.edstem.habitTracker.repository.HabitRepository;
 import com.edstem.habitTracker.repository.TimerRepository;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import java.util.List;
-import java.util.stream.Collectors;
+import org.springframework.util.StringUtils;
 
 @Service
 @RequiredArgsConstructor
@@ -19,17 +20,28 @@ public class TimerService {
     private final ModelMapper modelMapper;
     private final TimerRepository timerRepository;
     private final HabitRepository habitRepository;
+
     public TimerResponse createTimer(Long habitId, TimerRequest timerRequest) {
-        Habit habit = habitRepository.findById(habitId)
-                .orElseThrow(() -> new RuntimeException("Habit not found with id: " + habitId));
+        if (StringUtils.isEmpty(timerRequest.getName())) {
+            throw new IllegalArgumentException("name cannot be empty or blank");
+        }
+        Habit habit =
+                habitRepository
+                        .findById(habitId)
+                        .orElseThrow(
+                                () -> new RuntimeException("Habit not found with id: " + habitId));
         Timer timer = modelMapper.map(timerRequest, Timer.class);
         timer.setHabit(habit);
         Timer savedTimer = timerRepository.save(timer);
-        return modelMapper.map(savedTimer,TimerResponse.class);
+        return modelMapper.map(savedTimer, TimerResponse.class);
     }
+
     public List<TimerResponse> getAllTimers(Long habitId) {
-        Habit habit = habitRepository.findById(habitId)
-                .orElseThrow(() -> new RuntimeException("Habit not found with id: " + habitId));
+        Habit habit =
+                habitRepository
+                        .findById(habitId)
+                        .orElseThrow(
+                                () -> new RuntimeException("Habit not found with id: " + habitId));
         List<Timer> timers = timerRepository.findByHabit(habit);
         return timers.stream()
                 .map(timer -> modelMapper.map(timer, TimerResponse.class))
@@ -37,17 +49,25 @@ public class TimerService {
     }
 
     public TimerResponse getTimerById(Long id) {
-        Timer timer = timerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Timer not found with id: " + id));
+        Timer timer =
+                timerRepository
+                        .findById(id)
+                        .orElseThrow(() -> new RuntimeException("Timer not found with id: " + id));
         return modelMapper.map(timer, TimerResponse.class);
     }
 
     public TimerResponse updateTimer(Long habitId, Long timerId, TimerRequest timerRequest) {
-        Habit habit = habitRepository.findById(habitId)
-                .orElseThrow(() -> new RuntimeException("Habit not found with id: " + habitId));
+        Habit habit =
+                habitRepository
+                        .findById(habitId)
+                        .orElseThrow(
+                                () -> new RuntimeException("Habit not found with id: " + habitId));
 
-        Timer timer = timerRepository.findById(timerId)
-                .orElseThrow(() -> new RuntimeException("Timer not found with id: " + timerId));
+        Timer timer =
+                timerRepository
+                        .findById(timerId)
+                        .orElseThrow(
+                                () -> new RuntimeException("Timer not found with id: " + timerId));
         timer.setName(timerRequest.getName());
         timer.setInterval(timerRequest.getInterval());
         timer.setStartTime(timerRequest.getStartTime());
@@ -55,16 +75,20 @@ public class TimerService {
 
         return modelMapper.map(updatedTimer, TimerResponse.class);
     }
-    public void deleteTimer(Long habitId, Long timerId) {
-        Habit habit = habitRepository.findById(habitId)
-                .orElseThrow(() -> new RuntimeException("Habit not found with id: " + habitId));
 
-        Timer timer = timerRepository.findById(timerId)
-                .orElseThrow(() -> new RuntimeException("Timer not found with id: " + timerId));
+    public void deleteTimer(Long habitId, Long timerId) {
+        Habit habit =
+                habitRepository
+                        .findById(habitId)
+                        .orElseThrow(
+                                () -> new RuntimeException("Habit not found with id: " + habitId));
+
+        Timer timer =
+                timerRepository
+                        .findById(timerId)
+                        .orElseThrow(
+                                () -> new RuntimeException("Timer not found with id: " + timerId));
 
         timerRepository.delete(timer);
     }
-
-
 }
-

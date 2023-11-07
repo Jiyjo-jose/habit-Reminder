@@ -97,7 +97,7 @@
 					<java>
 						<googleJavaFormat>
 							<version>1.10.0</version>
-							<style>ASP</style>
+							<style>AOSP</style>
 							<reflowLongStrings>true</reflowLongStrings>
 						</googleJavaFormat>
 					</java>
