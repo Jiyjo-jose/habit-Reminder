@@ -31,17 +31,17 @@ import java.util.List;
             return new ResponseEntity<>(timerResponse, HttpStatus.CREATED);
         }
 
-    @GetMapping("{habitId}/timers")
+    @GetMapping("/{habitId}/viewAllTimers")
     public ResponseEntity<List<TimerResponse>> getAllTimers(@PathVariable Long habitId) {
         List<TimerResponse> timerResponses = timerService.getAllTimers(habitId);
         return new ResponseEntity<>(timerResponses, HttpStatus.OK);
     }
-    @GetMapping("/{habitId}/timers/{timerId}")
+    @GetMapping("/{habitId}/viewTimer/{timerId}")
     public ResponseEntity<TimerResponse> getTimerById(@PathVariable Long timerId) {
         TimerResponse timerResponse = timerService.getTimerById(timerId);
         return new ResponseEntity<>(timerResponse, HttpStatus.OK);
     }
-    @PatchMapping("/{habitId}/timers/{timerId}")
+    @PatchMapping("/{habitId}/updateTimer/{timerId}")
     public ResponseEntity<TimerResponse> updateTimer(
             @PathVariable Long habitId,
             @PathVariable Long timerId,
@@ -50,7 +50,7 @@ import java.util.List;
         TimerResponse updatedTimer = timerService.updateTimer(habitId, timerId, timerRequest);
         return new ResponseEntity<>(updatedTimer, HttpStatus.OK);
     }
-    @DeleteMapping("/{habitId}/timers/{timerId}")
+    @DeleteMapping("/{habitId}/deleteTimer/{timerId}")
     public ResponseEntity<String> deleteTimer(@PathVariable Long habitId, @PathVariable Long timerId) {
         timerService.deleteTimer(habitId, timerId);
         return new ResponseEntity<>("Timer with id " + timerId + " has been deleted", HttpStatus.OK);

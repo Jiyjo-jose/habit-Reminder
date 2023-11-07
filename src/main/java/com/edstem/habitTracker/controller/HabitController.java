@@ -44,20 +44,20 @@ public class HabitController {
         return ResponseEntity.ok(habitResponses);
     }
 
-    @GetMapping("/{habitId}")
+    @GetMapping("/view/{habitId}")
     public ResponseEntity<CreateHabitResponse> getHabitById(@PathVariable Long habitId) {
         Habit habit = habitService.getHabitById(habitId);
         CreateHabitResponse habitResponse = modelMapper.map(habit, CreateHabitResponse.class);
         return new ResponseEntity<>(habitResponse, HttpStatus.OK);
     }
 
-    @PatchMapping("/{habitId}")
+    @PatchMapping("/update/{habitId}")
     public ResponseEntity<CreateHabitResponse> updateHabit(@PathVariable Long habitId, @RequestBody CreateHabitRequest habitRequest) {
         Habit habit = habitService.updateHabit(habitId, habitRequest);
         CreateHabitResponse habitResponse = modelMapper.map(habit, CreateHabitResponse.class);
         return new ResponseEntity<>(habitResponse, HttpStatus.OK);
     }
-    @DeleteMapping("/{habitId}")
+    @DeleteMapping("/delete/{habitId}")
     public ResponseEntity<String> deleteHabitById(@PathVariable Long habitId) {
         habitService.deleteHabitById(habitId);
         return new ResponseEntity<>("Habit with ID " + habitId + " has been deleted", HttpStatus.OK);

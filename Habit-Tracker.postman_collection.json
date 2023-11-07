@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "http://localhost:8080/timer",
+			"name": "createTimer",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -25,7 +25,7 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:8080/habit/create",
+			"name": "createHabit",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -43,7 +43,7 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:8080/habit/1",
+			"name": "deleteHabit",
 			"request": {
 				"method": "DELETE",
 				"header": [],
@@ -61,7 +61,7 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:8080/habit/1",
+			"name": "updateHabit",
 			"request": {
 				"method": "PATCH",
 				"header": [],
@@ -79,7 +79,7 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:8080/habit/view",
+			"name": "viewAllHabits",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -100,7 +100,7 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:8080/habit/2",
+			"name": "viewHabitById",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -121,7 +121,7 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:8080/habit/3/done",
+			"name": "markHabitAsDone",
 			"request": {
 				"method": "PUT",
 				"header": [],
@@ -139,7 +139,7 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:8080/timer/2/timers",
+			"name": "viewAllTimers",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -148,7 +148,7 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:8080/timer/2/timers/2",
+			"name": "viewTimerById",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -157,7 +157,7 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:8080/timer/2/timers/2",
+			"name": "updateTimer",
 			"request": {
 				"method": "PATCH",
 				"header": [],
@@ -175,11 +175,29 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:8080/timer/2/timers/5",
+			"name": "deleteTimer",
 			"request": {
 				"method": "DELETE",
 				"header": [],
 				"url": "http://localhost:8080/timer/2/timers/5"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/timer/habit/1/done",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"habitId\":1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/timer/habit/1/done"
 			},
 			"response": []
 		}
