@@ -13,14 +13,14 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{   \n    \"id\":2,\n    \"habitId\":2,\n    \"name\":\"breakfast\",\n    \"interval\":345667,\n    \"startTime\":\"14:29\"\n    \n}",
+					"raw": "{   \n  \n    \"name\":\"ghjhjjg\",\n    \"interval\":10,\n    \"startTime\":\"13:00\"\n    \n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "http://localhost:8080/timer"
+				"url": "http://localhost:8080/timer/15/timers"
 			},
 			"response": []
 		},
@@ -31,7 +31,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{   \"habitId\":2,\n      \"description\":\"excercise on time\"\n\n}",
+					"raw": "{   \n     \n      \"description\":\"ghh\"\n\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -49,14 +49,14 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{   \n    \"habitId\":1,\n    \"description\": \"eating on correct time\"\n\n}",
+					"raw": "{   \n\n\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "http://localhost:8080/habit/1"
+				"url": "http://localhost:8080/habit/delete/16"
 			},
 			"response": []
 		},
@@ -67,14 +67,14 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{   \n    \"habitId\":2,\n    \"description\": \"eating on correct time\"\n\n}",
+					"raw": "{   \n    \"habitId\":1,\n    \"description\": \"eating on correct time\"\n\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "http://localhost:8080/habit/2"
+				"url": "http://localhost:8080/habit/update/1"
 			},
 			"response": []
 		},
@@ -116,7 +116,7 @@
 						}
 					}
 				},
-				"url": "http://localhost:8080/habit/2"
+				"url": "http://localhost:8080/habit/view/15"
 			},
 			"response": []
 		},
@@ -143,7 +143,7 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:8080/timer/2/timers"
+				"url": "http://localhost:8080/timer/1/viewAllTimers"
 			},
 			"response": []
 		},
@@ -152,7 +152,7 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:8080/timer/2/timers/2"
+				"url": "http://localhost:8080/timer/1/viewTimer/8"
 			},
 			"response": []
 		},
@@ -163,14 +163,14 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\":\"dinner\",\n    \"interval\":543323,\n    \"startTime\":\"11:11\"\n}",
+					"raw": "{\n    \"name\":\"gooooooooo\",\n    \"interval\":543323,\n    \"startTime\":\"11:11\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "http://localhost:8080/timer/2/timers/2"
+				"url": "http://localhost:8080/timer/1/updateTimer/8"
 			},
 			"response": []
 		},
@@ -179,25 +179,7 @@
 			"request": {
 				"method": "DELETE",
 				"header": [],
-				"url": "http://localhost:8080/timer/2/timers/5"
-			},
-			"response": []
-		},
-		{
-			"name": "http://localhost:8080/timer/habit/1/done",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n   \"habitId\":1\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": "http://localhost:8080/timer/habit/1/done"
+				"url": "http://localhost:8080/timer/15/deleteTimer/10"
 			},
 			"response": []
 		}
