@@ -1,26 +1,28 @@
 package com.edstem.habitTracker.controller;
 
 import com.edstem.habitTracker.contract.Request.CreateHabitRequest;
-import com.edstem.habitTracker.contract.Response.CreateHabitResponse;
+
 import com.edstem.habitTracker.model.Habit;
 import com.edstem.habitTracker.service.HabitService;
-import java.lang.reflect.Type;
-import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/habit")
@@ -31,37 +33,27 @@ public class HabitController {
     private final HabitService habitService;
     private final ModelMapper modelMapper;
 
-    @PostMapping("/create")
-    public ResponseEntity<CreateHabitResponse> createHabit(
-            @RequestBody CreateHabitRequest createHabitRequest) {
-        Habit habit = habitService.createHabit(createHabitRequest);
-        CreateHabitResponse habitResponse = modelMapper.map(habit, CreateHabitResponse.class);
-        return ResponseEntity.ok(habitResponse);
+    @PostMapping("/createHabit")
+    public ResponseEntity<Habit> createHabit(@RequestBody @Validated CreateHabitRequest createHabitRequest) {
+        Habit createdHabit = habitService.createHabit(createHabitRequest);
+        return new ResponseEntity<>(createdHabit, HttpStatus.CREATED);
     }
-
-    @GetMapping("/view")
-    public ResponseEntity<List<CreateHabitResponse>> getAllHabits() {
+    @GetMapping("/viewHabit")
+    public ResponseEntity<List<Habit>> getAllHabits() {
         List<Habit> habits = habitService.getAllHabits();
-        Type listType = new TypeToken<List<CreateHabitResponse>>() {}.getType();
-        List<CreateHabitResponse> habitResponses = modelMapper.map(habits, listType);
-        return ResponseEntity.ok(habitResponses);
+        return ResponseEntity.ok(habits);
     }
-
-    @GetMapping("/view/{habitId}")
-    public ResponseEntity<CreateHabitResponse> getHabitById(@PathVariable Long habitId) {
-        Habit habit = habitService.getHabitById(habitId);
-        CreateHabitResponse habitResponse = modelMapper.map(habit, CreateHabitResponse.class);
-        return new ResponseEntity<>(habitResponse, HttpStatus.OK);
+    @PutMapping("/{habitId}/editHabit")
+    public ResponseEntity<String> editHabit(
+            @PathVariable Long habitId,
+            @RequestBody CreateHabitRequest editHabitRequest) {
+        try {
+            habitService.editHabit(habitId, editHabitRequest);
+            return ResponseEntity.ok("Habit updated successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating habit");
+        }
     }
-
-    @PatchMapping("/update/{habitId}")
-    public ResponseEntity<CreateHabitResponse> updateHabit(
-            @PathVariable Long habitId, @RequestBody CreateHabitRequest habitRequest) {
-        Habit habit = habitService.updateHabit(habitId, habitRequest);
-        CreateHabitResponse habitResponse = modelMapper.map(habit, CreateHabitResponse.class);
-        return new ResponseEntity<>(habitResponse, HttpStatus.OK);
-    }
-
     @DeleteMapping("/delete/{habitId}")
     public ResponseEntity<String> deleteHabitById(@PathVariable Long habitId) {
         habitService.deleteHabitById(habitId);
@@ -69,10 +61,11 @@ public class HabitController {
                 "Habit with ID " + habitId + " has been deleted", HttpStatus.OK);
     }
 
-    @PutMapping("/{habitId}/done")
-    public ResponseEntity<String> markHabitAsDone(@PathVariable Long habitId) {
-        habitService.markHabitAsDone(habitId);
-        return new ResponseEntity<>(
-                "Habit with ID " + habitId + " has been marked as done", HttpStatus.OK);
-    }
+
 }
+
+
+
+
+
+

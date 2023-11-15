@@ -2,13 +2,15 @@ package com.edstem.habitTracker.service;
 
 import com.edstem.habitTracker.contract.Request.CreateHabitRequest;
 import com.edstem.habitTracker.model.Habit;
+
 import com.edstem.habitTracker.repository.HabitRepository;
 import jakarta.persistence.EntityNotFoundException;
-import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -18,36 +20,25 @@ public class HabitService {
     private final HabitRepository habitRepository;
 
     public Habit createHabit(CreateHabitRequest createHabitRequest) {
-        if (StringUtils.isEmpty(createHabitRequest.getDescription())) {
-            throw new IllegalArgumentException("Description cannot be empty or blank");
-        }
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.typeMap(CreateHabitRequest.class, Habit.class)
+                .addMappings(mapper -> mapper.map(src -> src.getInterval(), Habit::setInterval));
         Habit habit = modelMapper.map(createHabitRequest, Habit.class);
         return habitRepository.save(habit);
     }
-
     public List<Habit> getAllHabits() {
         return habitRepository.findAll();
     }
+    public void editHabit(Long habitId, CreateHabitRequest editHabitRequest) {
+        Habit habit = habitRepository.findById(habitId)
+                .orElseThrow(() -> new EntityNotFoundException("Habit not found"));
 
-    public Habit getHabitById(Long habitId) {
-        return habitRepository
-                .findById(habitId)
-                .orElseThrow(
-                        () -> new EntityNotFoundException("Habit not found with id: " + habitId));
+        habit.setName(editHabitRequest.getName());
+        habit.setDescription(editHabitRequest.getDescription());
+        habit.setReminderTime(editHabitRequest.getReminderTime());
+        habit.setInterval(editHabitRequest.getInterval());
+        habitRepository.save(habit);
     }
-
-    public Habit updateHabit(Long habitId, CreateHabitRequest habitRequest) {
-        Habit habit =
-                habitRepository
-                        .findById(habitId)
-                        .orElseThrow(
-                                () ->
-                                        new EntityNotFoundException(
-                                                "Habit not found with id: " + habitId));
-        modelMapper.map(habitRequest, habit);
-        return habitRepository.save(habit);
-    }
-
     public void deleteHabitById(Long habitId) {
         Habit habit =
                 habitRepository
@@ -58,14 +49,6 @@ public class HabitService {
                                                 "Habit not found with id: " + habitId));
         habitRepository.deleteById(habitId);
     }
-
-    public void markHabitAsDone(Long habitId) {
-        Habit habit =
-                habitRepository
-                        .findById(habitId)
-                        .orElseThrow(
-                                () -> new RuntimeException("Habit not found with ID: " + habitId));
-        habit.setDone(true);
-        habitRepository.save(habit);
-    }
 }
+
+
