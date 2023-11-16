@@ -1,85 +1,83 @@
 # Habit Tracker Application
 
-The Habit Tracker Application is a versatile tool designed to help you establish and maintain habits, offering timed reminders and habit completion tracking. With this application, you can effectively manage multiple habits, create custom timers, and see your progress over time.
-
-
+The Habit Tracker Application is a versatile tool designed to help you establish and maintain habits, offering timed reminders and habit completion tracking. With this application, you can effectively manage multiple habits.
+## Overview
+This repository contains the source code for a Habit Tracker application. The application is designed to help users track and build positive habits through reminders.
 
 ## Features
-- **Create Habits:** Easily create habits.
-- **Create Timers:** Easily create timers with customizable labels and time intervals.
-- **Manage Multiple Timers:** Add and organize multiple timers to keep track of various habits and tasks.
-- **Set Custom Intervals:** Tailor timers with specific time intervals that suit your requirements.
-- **Reminders:** Get recurring notifications based on the selected time interval for each timer.
-- **Habit Completion:** Mark your habits as done to track your progress over time.
-
+- **Habit Management**: Create, update, and delete habits.
+- **Reminder Days**: Specify which days reminders should be sent for each habit.
+- **Reminder Time**: Set a specific time for daily reminders.
+- **Interval**: Define the frequency of reminders.
+- **End Date**: Choose an end date for a habit.
 
 ## Endpoints (API)
 
-### Create Habit
-- **Endpoint:** `/habit/create`
+### Habit
+
+#### Create Habit
+
+- **Endpoint:** `/habit/createHabit`
 - **Method:** POST
-- **Description:** Create a new habit .
+- **Description:** Create a new habit.
 
+#### Get All Habits
 
-### List Habit
-- **Endpoint:** `/habit/view`
+- **Endpoint:** `/habit/viewHabit`
 - **Method:** GET
 - **Description:** Retrieve a list of all habits.
 
-### Get Habit by ID
-- **Endpoint:** `/habit/view/{habitId}`
-- **Method:** GET
-- **Description:** Retrieve a specific habit's details by its ID.
+#### Update Habit
 
-
-### Update Habit
-- **Endpoint:** `/habit/update/{habitId}`
-- **Method:** PATCH
+- **Endpoint:** `/habit/{habitId}/editHabit`
+- **Method:** PUT
 - **Description:** Update an existing habit's details.
 
+#### Delete Habit
 
-### Delete Habit
 - **Endpoint:** `/habit/delete/{habitId}`
 - **Method:** DELETE
 - **Description:** Delete a specific habit by its ID.
 
-### Mark Habit as Done
-- **Endpoint:** `/habit/{habitId}/done`
+
+### Reminder Days
+
+#### Add Reminder Days to Habit
+
+- **Endpoint:** `/habit/{habitId}/createReminderDays`
 - **Method:** POST
-- **Description:** Mark a habit as done, tracking its completion.
+- **Description:** Add reminder days to a habit.
 
-### Create Timer
-- **Endpoint:** `/timer/{habitId}/timers`
-- **Method:** POST
-- **Description:** Create a new timer associated with a specific habit.
+#### Complete Reminder Day
 
+- **Endpoint:** `/habit/{habitId}/reminderDays/{reminderDayId}/complete`
+- **Method:** PUT
+- **Description:** Mark a reminder day as completed.
 
-### List Timers
-- **Endpoint:** `/timer/{habitId}/viewAllTimers`
+#### Get Completed Reminder Days
+
+- **Endpoint:** `/habit/{habitId}/completedReminderDays`
 - **Method:** GET
-- **Description:** Retrieve a list of all timers.
+- **Description:** Retrieve completed reminder days for a habit.
 
-### Get Timer by ID
-- **Endpoint:** `/timer/{habitId}/viewTimer/{timerId}`
+#### Get Incomplete Reminder Days
+
+- **Endpoint:** `/habit/{habitId}/incompleteReminderDays`
 - **Method:** GET
-- **Description:** Retrieve a specific timer's details by its ID.
+- **Description:** Retrieve incomplete reminder days for a habit.
 
+#### Delete Reminder Day
 
-### Update Timer
-- **Endpoint:** `/timer/{habitId}/updateTimer/{timerId}`
-- **Method:** PATCH
-- **Description:** Update an existing timer's details.
-
-
-### Delete Timer
-- **Endpoint:** `/timer/{habitId}/deleteTimer/{timerId}`
+- **Endpoint:** `/habit/{habitId}/reminderDays/{reminderDayId}`
 - **Method:** DELETE
-- **Description:** Delete a specific timer by its ID.
-
+- **Description:** Delete a specific reminder day.
 
 
 ## Installation
 
+
 1. Clone the repository to your local machine:https://github.com/Jiyjo-jose/habit-tracker.
+
 2. Open the project.
+
 3. Ensure you have Java and Maven installed.
