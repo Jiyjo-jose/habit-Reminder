@@ -40,6 +40,12 @@ public class ReminderDaysController {
         }
     }
 
+    @GetMapping("/{habitId}/allReminderDays")
+    public ResponseEntity<List<ReminderDays>> getAllReminderDays(@PathVariable Long habitId) {
+        List<ReminderDays> allReminderDays = reminderDaysService.getAllReminderDays(habitId);
+        return ResponseEntity.ok(allReminderDays);
+    }
+
     @PutMapping("/{habitId}/reminderDays/{reminderDayId}/complete")
     public ResponseEntity<String> completeReminderDay(
             @PathVariable Long habitId, @PathVariable Long reminderDayId) {

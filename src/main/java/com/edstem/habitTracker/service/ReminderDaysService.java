@@ -38,6 +38,15 @@ public class ReminderDaysService {
                         });
     }
 
+    public List<ReminderDays> getAllReminderDays(Long habitId) {
+        Habit habit =
+                habitRepository
+                        .findById(habitId)
+                        .orElseThrow(() -> new EntityNotFoundException("Habit not found"));
+
+        return habit.getReminderDays();
+    }
+
     public void completeReminderDay(Long habitId, Long reminderDayId) {
         Habit habit =
                 habitRepository

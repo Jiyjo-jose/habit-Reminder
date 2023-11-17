@@ -1,8 +1,11 @@
 package com.edstem.habitTracker.controller;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.edstem.habitTracker.contract.Request.AddReminderDaysRequest;
@@ -14,7 +17,6 @@ import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -44,7 +46,7 @@ class ReminderDaysControllerTest {
                 reminderDaysController.addReminderDaysToHabit(habitId, addReminderDaysRequest);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals("Reminder days added successfully", responseEntity.getBody());
-        Mockito.verify(reminderDaysService, Mockito.times(1))
+        verify(reminderDaysService, times(1))
                 .addReminderDaysToHabit(habitId, addReminderDaysRequest.getReminderDays());
     }
 
@@ -61,8 +63,23 @@ class ReminderDaysControllerTest {
                 reminderDaysController.addReminderDaysToHabit(habitId, addReminderDaysRequest);
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, responseEntity.getStatusCode());
         assertEquals("Error adding reminder days", responseEntity.getBody());
-        Mockito.verify(reminderDaysService, Mockito.times(1))
+        verify(reminderDaysService, times(1))
                 .addReminderDaysToHabit(habitId, addReminderDaysRequest.getReminderDays());
+    }
+
+    @Test
+    void getAllReminderDays_shouldReturnListOfReminderDays() {
+
+        Long habitId = 1L;
+        List<ReminderDays> expectedReminderDays =
+                Arrays.asList(new ReminderDays(), new ReminderDays());
+
+        when(reminderDaysService.getAllReminderDays(habitId)).thenReturn(expectedReminderDays);
+        ResponseEntity<List<ReminderDays>> responseEntity =
+                reminderDaysController.getAllReminderDays(habitId);
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(responseEntity.getBody()).isEqualTo(expectedReminderDays);
+        verify(reminderDaysService, times(1)).getAllReminderDays(habitId);
     }
 
     @Test
@@ -74,8 +91,7 @@ class ReminderDaysControllerTest {
                 reminderDaysController.completeReminderDay(habitId, reminderDayId);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals("Reminder day marked as completed successfully", responseEntity.getBody());
-        Mockito.verify(reminderDaysService, Mockito.times(1))
-                .completeReminderDay(habitId, reminderDayId);
+        verify(reminderDaysService, times(1)).completeReminderDay(habitId, reminderDayId);
     }
 
     @Test
@@ -91,7 +107,7 @@ class ReminderDaysControllerTest {
                 reminderDaysController.getCompletedReminderDays(habitId);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals(completedReminderDays, responseEntity.getBody());
-        Mockito.verify(reminderDaysService, Mockito.times(1)).getCompletedReminderDays(habitId);
+        verify(reminderDaysService, times(1)).getCompletedReminderDays(habitId);
     }
 
     @Test
@@ -108,7 +124,7 @@ class ReminderDaysControllerTest {
                 reminderDaysController.getIncompleteReminderDays(habitId);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals(incompleteReminderDays, responseEntity.getBody());
-        Mockito.verify(reminderDaysService, Mockito.times(1)).getIncompleteReminderDays(habitId);
+        verify(reminderDaysService, times(1)).getIncompleteReminderDays(habitId);
     }
 
     @Test
@@ -120,8 +136,7 @@ class ReminderDaysControllerTest {
                 reminderDaysController.deleteReminderDay(habitId, reminderDayId);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals("Reminder day deleted successfully", responseEntity.getBody());
-        Mockito.verify(reminderDaysService, Mockito.times(1))
-                .deleteReminderDay(habitId, reminderDayId);
+        verify(reminderDaysService, times(1)).deleteReminderDay(habitId, reminderDayId);
     }
 
     @Test
@@ -135,8 +150,7 @@ class ReminderDaysControllerTest {
                 reminderDaysController.deleteReminderDay(habitId, reminderDayId);
         assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
         assertEquals("Reminder day not found", responseEntity.getBody());
-        Mockito.verify(reminderDaysService, Mockito.times(1))
-                .deleteReminderDay(habitId, reminderDayId);
+        verify(reminderDaysService, times(1)).deleteReminderDay(habitId, reminderDayId);
     }
 
     @Test
@@ -151,7 +165,6 @@ class ReminderDaysControllerTest {
                 reminderDaysController.deleteReminderDay(habitId, reminderDayId);
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, responseEntity.getStatusCode());
         assertEquals("Error deleting reminder day", responseEntity.getBody());
-        Mockito.verify(reminderDaysService, Mockito.times(1))
-                .deleteReminderDay(habitId, reminderDayId);
+        verify(reminderDaysService, times(1)).deleteReminderDay(habitId, reminderDayId);
     }
 }

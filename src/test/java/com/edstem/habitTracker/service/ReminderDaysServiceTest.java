@@ -1,10 +1,13 @@
 package com.edstem.habitTracker.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -14,6 +17,7 @@ import com.edstem.habitTracker.repository.HabitRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -49,8 +53,32 @@ class ReminderDaysServiceTest {
         Mockito.when(habitRepository.save(any(Habit.class))).thenReturn(existingHabit);
         reminderDaysService.addReminderDaysToHabit(habitId, reminderDays);
         assertEquals(3, existingHabit.getReminderDays().size());
-        Mockito.verify(habitRepository, Mockito.times(1)).findById(habitId);
-        Mockito.verify(habitRepository, Mockito.times(1)).save(existingHabit);
+        Mockito.verify(habitRepository, times(1)).findById(habitId);
+        Mockito.verify(habitRepository, times(1)).save(existingHabit);
+    }
+
+    @Test
+    void getAllReminderDays_shouldReturnListOfReminderDays() {
+
+        Long habitId = 1L;
+        ReminderDays reminderDay1 = new ReminderDays();
+        ReminderDays reminderDay2 = new ReminderDays();
+        Habit habit = new Habit();
+        habit.setReminderDays(Arrays.asList(reminderDay1, reminderDay2));
+        when(habitRepository.findById(habitId)).thenReturn(Optional.of(habit));
+        List<ReminderDays> result = reminderDaysService.getAllReminderDays(habitId);
+        assertThat(result).containsExactly(reminderDay1, reminderDay2);
+        verify(habitRepository, times(1)).findById(habitId);
+    }
+
+    @Test
+    void getAllReminderDays_shouldThrowEntityNotFoundExceptionWhenHabitNotFound() {
+
+        Long habitId = 1L;
+        when(habitRepository.findById(habitId)).thenReturn(Optional.empty());
+        assertThatThrownBy(() -> reminderDaysService.getAllReminderDays(habitId))
+                .isInstanceOf(EntityNotFoundException.class)
+                .hasMessage("Habit not found");
     }
 
     @Test
@@ -67,8 +95,8 @@ class ReminderDaysServiceTest {
         when(habitRepository.save(Mockito.any(Habit.class))).thenReturn(existingHabit);
         reminderDaysService.completeReminderDay(habitId, reminderDayId);
         assertTrue(reminderDay.isCompleted());
-        verify(habitRepository, Mockito.times(1)).findById(habitId);
-        verify(habitRepository, Mockito.times(1)).save(existingHabit);
+        verify(habitRepository, times(1)).findById(habitId);
+        verify(habitRepository, times(1)).save(existingHabit);
     }
 
     @Test
@@ -81,7 +109,7 @@ class ReminderDaysServiceTest {
                 () -> {
                     reminderDaysService.completeReminderDay(habitId, reminderDayId);
                 });
-        verify(habitRepository, Mockito.times(1)).findById(habitId);
+        verify(habitRepository, times(1)).findById(habitId);
         verify(habitRepository, Mockito.never()).save(Mockito.any(Habit.class));
     }
 
@@ -98,7 +126,7 @@ class ReminderDaysServiceTest {
                 () -> {
                     reminderDaysService.completeReminderDay(habitId, reminderDayId);
                 });
-        verify(habitRepository, Mockito.times(1)).findById(habitId);
+        verify(habitRepository, times(1)).findById(habitId);
         verify(habitRepository, Mockito.never()).save(Mockito.any(Habit.class));
     }
 
@@ -120,7 +148,7 @@ class ReminderDaysServiceTest {
                 reminderDaysService.getCompletedReminderDays(habitId);
         assertEquals(1, completedReminderDays.size());
         assertEquals(reminderDay1, completedReminderDays.get(0));
-        verify(habitRepository, Mockito.times(1)).findById(habitId);
+        verify(habitRepository, times(1)).findById(habitId);
     }
 
     @Test
@@ -132,7 +160,7 @@ class ReminderDaysServiceTest {
                 () -> {
                     reminderDaysService.getCompletedReminderDays(habitId);
                 });
-        verify(habitRepository, Mockito.times(1)).findById(habitId);
+        verify(habitRepository, times(1)).findById(habitId);
     }
 
     @Test
@@ -152,7 +180,7 @@ class ReminderDaysServiceTest {
                 reminderDaysService.getIncompleteReminderDays(habitId);
         assertEquals(1, incompleteReminderDays.size());
         assertEquals(reminderDay2, incompleteReminderDays.get(0));
-        verify(habitRepository, Mockito.times(1)).findById(habitId);
+        verify(habitRepository, times(1)).findById(habitId);
     }
 
     @Test
@@ -164,7 +192,7 @@ class ReminderDaysServiceTest {
                 () -> {
                     reminderDaysService.getIncompleteReminderDays(habitId);
                 });
-        verify(habitRepository, Mockito.times(1)).findById(habitId);
+        verify(habitRepository, times(1)).findById(habitId);
     }
 
     @Test
@@ -172,6 +200,6 @@ class ReminderDaysServiceTest {
         Long habitId = 1L;
         Long reminderDayId = 1L;
         reminderDaysService.deleteReminderDay(habitId, reminderDayId);
-        verify(habitRepository, Mockito.times(1)).deleteReminderDay(habitId, reminderDayId);
+        verify(habitRepository, times(1)).deleteReminderDay(habitId, reminderDayId);
     }
 }
