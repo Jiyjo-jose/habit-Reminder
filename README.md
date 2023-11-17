@@ -48,6 +48,12 @@ This repository contains the source code for a Habit Tracker application. The ap
 - **Method:** POST
 - **Description:** Add reminder days to a habit.
 
+#### View Reminder Days of a Habit
+
+- **Endpoint:** `/habit/{habitId}/allReminderDays`
+- **Method:** GET
+- **Description:** View reminder days of a habit.
+
 #### Complete Reminder Day
 
 - **Endpoint:** `/habit/{habitId}/reminderDays/{reminderDayId}/complete`
