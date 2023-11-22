@@ -7,20 +7,20 @@
 	},
 	"item": [
 		{
-			"name": "createTimer",
+			"name": "createReminderDays",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{   \n  \n    \"name\":\"ghjhjjg\",\n    \"interval\":10,\n    \"startTime\":\"13:00\"\n    \n}",
+					"raw": "{\n  \"reminderDays\": [\"MONDAY\", \"WEDNESDAY\", \"FRIDAY\"]\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "http://localhost:8080/timer/15/timers"
+				"url": "http://localhost:8080/habit/1/createReminderDays"
 			},
 			"response": []
 		},
@@ -31,14 +31,14 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{   \n     \n      \"description\":\"ghh\"\n\n}",
+					"raw": "{\n  \"name\": \"Morning Exercise\",\n  \"description\": \"Start the day with a quick workout\",\n  \"reminderTime\": \"08:00\",\n  \"interval\": \"PT30M\"\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "http://localhost:8080/habit/create"
+				"url": "http://localhost:8080/habit/createHabit"
 			},
 			"response": []
 		},
@@ -56,25 +56,25 @@
 						}
 					}
 				},
-				"url": "http://localhost:8080/habit/delete/16"
+				"url": "http://localhost:8080/habit/delete/1"
 			},
 			"response": []
 		},
 		{
 			"name": "updateHabit",
 			"request": {
-				"method": "PATCH",
+				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{   \n    \"habitId\":1,\n    \"description\": \"eating on correct time\"\n\n}",
+					"raw": "{   \n   \"name\": \"Morning Exercise 'edited'\",\n  \"description\": \"Start the day with a quick workout 'edited'\",\n  \"reminderTime\": \"08:01\",\n  \"interval\": \"PT3M\"\n\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "http://localhost:8080/habit/update/1"
+				"url": "http://localhost:8080/habit/1/editHabit"
 			},
 			"response": []
 		},
@@ -95,33 +95,12 @@
 						}
 					}
 				},
-				"url": "http://localhost:8080/habit/view"
+				"url": "http://localhost:8080/habit/viewHabit"
 			},
 			"response": []
 		},
 		{
-			"name": "viewHabitById",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{   \n\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": "http://localhost:8080/habit/view/15"
-			},
-			"response": []
-		},
-		{
-			"name": "markHabitAsDone",
+			"name": "markHabitAsCompletedForReminderDay",
 			"request": {
 				"method": "PUT",
 				"header": [],
@@ -134,52 +113,64 @@
 						}
 					}
 				},
-				"url": "http://localhost:8080/habit/3/done"
+				"url": "http://localhost:8080/habit/1/reminderDays/3/complete"
 			},
 			"response": []
 		},
 		{
-			"name": "viewAllTimers",
+			"name": "viewCompletedReminder",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"method": "GET",
-				"header": [],
-				"url": "http://localhost:8080/timer/1/viewAllTimers"
-			},
-			"response": []
-		},
-		{
-			"name": "viewTimerById",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": "http://localhost:8080/timer/1/viewTimer/8"
-			},
-			"response": []
-		},
-		{
-			"name": "updateTimer",
-			"request": {
-				"method": "PATCH",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\":\"gooooooooo\",\n    \"interval\":543323,\n    \"startTime\":\"11:11\"\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "http://localhost:8080/timer/1/updateTimer/8"
+				"url": "http://localhost:8080/habit/1/completedReminderDays"
 			},
 			"response": []
 		},
 		{
-			"name": "deleteTimer",
+			"name": "viewIncompletedReminder",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/habit/1/incompleteReminderDays"
+			},
+			"response": []
+		},
+		{
+			"name": "deleteReminderDay",
 			"request": {
 				"method": "DELETE",
 				"header": [],
-				"url": "http://localhost:8080/timer/15/deleteTimer/10"
+				"body": {
+					"mode": "raw",
+					"raw": "[\n  {\n    \n    \"day\": \"MONDAY\"\n\n  },\n  {\n    \"day\": \"TUESDAY\"\n  },\n  {\n    \"day\": \"WEDNESDAY\"\n  }\n  \n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/habit/1/reminderDays/3"
+			},
+			"response": []
+		},
+		{
+			"name": "view reminderDays of a habit",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/habit/1/allReminderDays"
 			},
 			"response": []
 		}

@@ -5,7 +5,6 @@ import com.edstem.habitTracker.model.Habit;
 import com.edstem.habitTracker.service.HabitService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -26,7 +25,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class HabitController {
 
     private final HabitService habitService;
-    private final ModelMapper modelMapper;
 
     @PostMapping("/createHabit")
     public ResponseEntity<Habit> createHabit(
