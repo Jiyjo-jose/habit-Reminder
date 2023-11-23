@@ -48,5 +48,10 @@ public class Habit {
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(style = "yyyy-MM-dd")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private Date startDate;
+
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(style = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date endDate;
 }

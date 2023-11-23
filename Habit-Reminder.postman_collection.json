@@ -80,22 +80,35 @@
 		},
 		{
 			"name": "viewAllHabits",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{   \n\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				"url": {
+					"raw": "http://localhost:8080/habit/viewHabit?page=0&size=4&sort=habitId,asc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"habit",
+						"viewHabit"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "4"
+						},
+						{
+							"key": "sort",
+							"value": "habitId,asc"
 						}
-					}
-				},
-				"url": "http://localhost:8080/habit/viewHabit"
+					]
+				}
 			},
 			"response": []
 		},

@@ -4,9 +4,11 @@ import com.edstem.habitTracker.contract.Request.CreateHabitRequest;
 import com.edstem.habitTracker.model.Habit;
 import com.edstem.habitTracker.repository.HabitRepository;
 import jakarta.persistence.EntityNotFoundException;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -29,8 +31,9 @@ public class HabitService {
         return habitRepository.save(habit);
     }
 
-    public List<Habit> getAllHabits() {
-        return habitRepository.findAll();
+    public Page<Habit> getAllHabits(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return habitRepository.findAll(pageable);
     }
 
     public void editHabit(Long habitId, CreateHabitRequest editHabitRequest) {

@@ -22,5 +22,6 @@ public class CreateHabitRequest {
     private String reminderTime;
 
     private Duration interval;
+    private Date startDate;
     private Date endDate;
 }

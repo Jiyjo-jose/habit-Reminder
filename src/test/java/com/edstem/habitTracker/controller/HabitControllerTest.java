@@ -18,6 +18,8 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
@@ -54,23 +56,14 @@ class HabitControllerTest {
     }
 
     @Test
-    void testGetAllHabits() {
-        Habit habit1 = new Habit();
-        habit1.setHabitId(1L);
-        habit1.setName("Exercise");
-        habit1.setDescription("Daily workout");
+    void getAllHabits_ReturnsPageOfHabits() {
 
-        Habit habit2 = new Habit();
-        habit2.setHabitId(2L);
-        habit2.setName("Reading");
-        habit2.setDescription("Read a book");
-
-        List<Habit> habits = Arrays.asList(habit1, habit2);
-        when(habitService.getAllHabits()).thenReturn(habits);
-        ResponseEntity<List<Habit>> responseEntity = habitController.getAllHabits();
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals(habits, responseEntity.getBody());
-        Mockito.verify(habitService, Mockito.times(1)).getAllHabits();
+        List<Habit> habits = Arrays.asList(new Habit(), new Habit());
+        Page<Habit> habitPage = new PageImpl<>(habits);
+        when(habitService.getAllHabits(0, 10)).thenReturn(habitPage);
+        ResponseEntity<Page<Habit>> result = habitController.getAllHabits(0, 10);
+        assertEquals(HttpStatus.OK, result.getStatusCode());
+        assertEquals(habitPage, result.getBody());
     }
 
     @Test
