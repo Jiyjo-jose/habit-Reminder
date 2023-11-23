@@ -1,4 +1,4 @@
-package com.edstem.habitTracker.controller;
+package com.edstem.habitReminder.controller;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -8,9 +8,9 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.edstem.habitTracker.contract.Request.AddReminderDaysRequest;
-import com.edstem.habitTracker.model.ReminderDays;
-import com.edstem.habitTracker.service.ReminderDaysService;
+import com.edstem.habitReminder.contract.Request.AddReminderDaysRequest;
+import com.edstem.habitReminder.model.ReminderDays;
+import com.edstem.habitReminder.service.ReminderDaysService;
 import jakarta.persistence.EntityNotFoundException;
 import java.time.DayOfWeek;
 import java.util.Arrays;

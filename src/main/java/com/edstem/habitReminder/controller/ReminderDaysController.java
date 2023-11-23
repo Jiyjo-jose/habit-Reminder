@@ -1,8 +1,8 @@
-package com.edstem.habitTracker.controller;
+package com.edstem.habitReminder.controller;
 
-import com.edstem.habitTracker.contract.Request.AddReminderDaysRequest;
-import com.edstem.habitTracker.model.ReminderDays;
-import com.edstem.habitTracker.service.ReminderDaysService;
+import com.edstem.habitReminder.contract.Request.AddReminderDaysRequest;
+import com.edstem.habitReminder.model.ReminderDays;
+import com.edstem.habitReminder.service.ReminderDaysService;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

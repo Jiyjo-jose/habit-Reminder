@@ -1,8 +1,8 @@
-package com.edstem.habitTracker.controller;
+package com.edstem.habitReminder.controller;
 
-import com.edstem.habitTracker.contract.Request.CreateHabitRequest;
-import com.edstem.habitTracker.model.Habit;
-import com.edstem.habitTracker.service.HabitService;
+import com.edstem.habitReminder.contract.Request.CreateHabitRequest;
+import com.edstem.habitReminder.model.Habit;
+import com.edstem.habitReminder.service.HabitService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;

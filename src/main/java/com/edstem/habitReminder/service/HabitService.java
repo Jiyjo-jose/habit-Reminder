@@ -1,8 +1,8 @@
-package com.edstem.habitTracker.service;
+package com.edstem.habitReminder.service;
 
-import com.edstem.habitTracker.contract.Request.CreateHabitRequest;
-import com.edstem.habitTracker.model.Habit;
-import com.edstem.habitTracker.repository.HabitRepository;
+import com.edstem.habitReminder.contract.Request.CreateHabitRequest;
+import com.edstem.habitReminder.model.Habit;
+import com.edstem.habitReminder.repository.HabitRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

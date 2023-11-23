@@ -1,4 +1,4 @@
-package com.edstem.habitTracker.contract.Request;
+package com.edstem.habitReminder.contract.Request;
 
 import jakarta.validation.constraints.NotBlank;
 import java.time.Duration;

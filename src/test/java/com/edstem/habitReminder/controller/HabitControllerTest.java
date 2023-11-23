@@ -1,4 +1,4 @@
-package com.edstem.habitTracker.controller;
+package com.edstem.habitReminder.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doNothing;
@@ -6,9 +6,9 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.edstem.habitTracker.contract.Request.CreateHabitRequest;
-import com.edstem.habitTracker.model.Habit;
-import com.edstem.habitTracker.service.HabitService;
+import com.edstem.habitReminder.contract.Request.CreateHabitRequest;
+import com.edstem.habitReminder.model.Habit;
+import com.edstem.habitReminder.service.HabitService;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;

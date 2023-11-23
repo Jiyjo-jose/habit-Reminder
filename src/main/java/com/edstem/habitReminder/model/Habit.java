@@ -1,4 +1,4 @@
-package com.edstem.habitTracker.model;
+package com.edstem.habitReminder.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.CascadeType;

@@ -1,4 +1,4 @@
-package com.edstem.habitTracker.contract.Request;
+package com.edstem.habitReminder.contract.Request;
 
 import java.time.DayOfWeek;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.edstem.habitTracker.service;
+package com.edstem.habitReminder.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -9,9 +9,9 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.edstem.habitTracker.contract.Request.CreateHabitRequest;
-import com.edstem.habitTracker.model.Habit;
-import com.edstem.habitTracker.repository.HabitRepository;
+import com.edstem.habitReminder.contract.Request.CreateHabitRequest;
+import com.edstem.habitReminder.model.Habit;
+import com.edstem.habitReminder.repository.HabitRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.time.ZoneOffset;

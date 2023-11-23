@@ -1,6 +1,6 @@
-package com.edstem.habitTracker.repository;
+package com.edstem.habitReminder.repository;
 
-import com.edstem.habitTracker.model.Habit;
+import com.edstem.habitReminder.model.Habit;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
