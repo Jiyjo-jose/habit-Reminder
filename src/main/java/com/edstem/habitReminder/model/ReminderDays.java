@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,5 +34,8 @@ public class ReminderDays {
     private Habit habit;
 
     private DayOfWeek day;
+    private LocalDate startDate;
+    private LocalDate endDate;
+
     private boolean completed;
 }

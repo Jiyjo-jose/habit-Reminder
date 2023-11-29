@@ -1,18 +1,19 @@
 package com.edstem.habitReminder.repository;
 
 import com.edstem.habitReminder.model.Habit;
+import com.edstem.habitReminder.model.ReminderDays;
+import java.time.LocalDate;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface HabitRepository extends JpaRepository<Habit, Long> {
-    @Modifying
+
     @Query(
-            "DELETE FROM ReminderDays r WHERE r.habit.habitId = :habitId AND r.reminderDayId ="
-                    + " :reminderDayId")
-    void deleteReminderDay(
-            @Param("habitId") Long habitId, @Param("reminderDayId") Long reminderDayId);
+            "SELECT rd FROM Habit h JOIN h.reminderDays rd WHERE rd.completed = false AND"
+                    + " rd.endDate >= :currentDate")
+    List<ReminderDays> findActiveReminders(@Param("currentDate") LocalDate currentDate);
 }

@@ -1,15 +1,16 @@
 package com.edstem.habitReminder.controller;
 
-import com.edstem.habitReminder.contract.Request.AddReminderDaysRequest;
+import com.edstem.habitReminder.contract.request.AddReminderDaysRequest;
+import com.edstem.habitReminder.contract.response.AddReminderDaysResponse;
 import com.edstem.habitReminder.model.ReminderDays;
 import com.edstem.habitReminder.service.ReminderDaysService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,23 +28,23 @@ public class ReminderDaysController {
     private final ReminderDaysService reminderDaysService;
 
     @PostMapping("/{habitId}/createReminderDays")
-    public ResponseEntity<?> addReminderDaysToHabit(
+    public ResponseEntity<AddReminderDaysResponse> addReminderDaysToHabit(
             @PathVariable Long habitId,
-            @RequestBody AddReminderDaysRequest addReminderDaysRequest) {
-        try {
-            reminderDaysService.addReminderDaysToHabit(
-                    habitId, addReminderDaysRequest.getReminderDays());
-            return ResponseEntity.ok("Reminder days added successfully");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error adding reminder days");
-        }
-    }
+            @RequestBody @Valid AddReminderDaysRequest reminderDaysRequest) {
 
-    @GetMapping("/{habitId}/allReminderDays")
-    public ResponseEntity<List<ReminderDays>> getAllReminderDays(@PathVariable Long habitId) {
-        List<ReminderDays> allReminderDays = reminderDaysService.getAllReminderDays(habitId);
-        return ResponseEntity.ok(allReminderDays);
+        try {
+            AddReminderDaysResponse response =
+                    reminderDaysService.addReminderDaysToHabit(
+                            habitId,
+                            reminderDaysRequest.getReminderDays(),
+                            reminderDaysRequest.getEndDate());
+
+            return ResponseEntity.ok(response);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     @PutMapping("/{habitId}/reminderDays/{reminderDayId}/complete")
@@ -51,6 +52,12 @@ public class ReminderDaysController {
             @PathVariable Long habitId, @PathVariable Long reminderDayId) {
         reminderDaysService.completeReminderDay(habitId, reminderDayId);
         return ResponseEntity.ok("Reminder day marked as completed successfully");
+    }
+
+    @GetMapping("/{habitId}/allReminderDays")
+    public ResponseEntity<List<ReminderDays>> getAllReminderDays(@PathVariable Long habitId) {
+        List<ReminderDays> allReminderDays = reminderDaysService.getAllReminderDays(habitId);
+        return ResponseEntity.ok(allReminderDays);
     }
 
     @GetMapping("/{habitId}/completedReminderDays")
@@ -66,19 +73,5 @@ public class ReminderDaysController {
         List<ReminderDays> incompleteReminderDays =
                 reminderDaysService.getIncompleteReminderDays(habitId);
         return ResponseEntity.ok(incompleteReminderDays);
-    }
-
-    @DeleteMapping("/{habitId}/reminderDays/{reminderDayId}")
-    public ResponseEntity<String> deleteReminderDay(
-            @PathVariable Long habitId, @PathVariable Long reminderDayId) {
-        try {
-            reminderDaysService.deleteReminderDay(habitId, reminderDayId);
-            return ResponseEntity.ok("Reminder day deleted successfully");
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Reminder day not found");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error deleting reminder day");
-        }
     }
 }
