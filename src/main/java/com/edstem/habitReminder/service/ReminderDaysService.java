@@ -7,6 +7,7 @@ import com.edstem.habitReminder.repository.HabitRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,9 @@ public class ReminderDaysService {
                 habitRepository
                         .findById(habitId)
                         .orElseThrow(() -> new EntityNotFoundException("Habit not found"));
+        if (habit.getReminderDays() == null) {
+            habit.setReminderDays(new ArrayList<>());
+        }
 
         List<ReminderDays> reminderDaysList =
                 reminderDays.stream()

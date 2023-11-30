@@ -40,7 +40,11 @@ public class HabitService {
         habit.setName(editHabitRequest.getName());
         habit.setDescription(editHabitRequest.getDescription());
         habit.setEmail(editHabitRequest.getEmail());
-        habit.setReminderTime(LocalTime.from(editHabitRequest.getReminderTime()));
+
+        LocalTime reminderTime = editHabitRequest.getReminderTime();
+        if (reminderTime != null) {
+            habit.setReminderTime(reminderTime);
+        }
         Habit updatedHabit = habitRepository.save(habit);
         CreateHabitResponse response = modelMapper.map(updatedHabit, CreateHabitResponse.class);
         return response;

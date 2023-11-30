@@ -1,5 +1,6 @@
 package com.edstem.habitReminder.service;
 
+import com.edstem.habitReminder.model.Habit;
 import com.edstem.habitReminder.model.ReminderDays;
 import com.edstem.habitReminder.repository.HabitRepository;
 import java.time.LocalDate;
@@ -29,15 +30,25 @@ public class ReminderEmailService {
         }
     }
 
-    private void scheduleEmail(ReminderDays reminder) {
-        LocalTime reminderTime = reminder.getHabit().getReminderTime();
+    void scheduleEmail(ReminderDays reminder) {
+        //        LocalTime reminderTime = reminder.getHabit().getReminderTime();
+        Habit habit = reminder.getHabit();
+        if (habit != null) {
+            LocalTime reminderTime = habit.getReminderTime();
 
-        String cronExpression =
-                String.format(" 0 %d %d * * ?", reminderTime.getMinute(), reminderTime.getHour());
-        taskScheduler.schedule(() -> sendEmail(reminder), new CronTrigger(cronExpression));
+            String cronExpression =
+                    String.format(
+                            " %d %d %d * * ?",
+                            reminderTime.getSecond(),
+                            reminderTime.getMinute(),
+                            reminderTime.getHour());
+            taskScheduler.schedule(() -> sendEmail(reminder), new CronTrigger(cronExpression));
+        } else {
+            System.out.println("Cannot schedule email. Habit is null.");
+        }
     }
 
-    private void sendEmail(ReminderDays reminder) {
+    void sendEmail(ReminderDays reminder) {
         String userEmail = reminder.getHabit().getEmail();
         String habitDescription = reminder.getHabit().getDescription();
         String emailSubject = "Reminder: " + reminder.getHabit().getName();

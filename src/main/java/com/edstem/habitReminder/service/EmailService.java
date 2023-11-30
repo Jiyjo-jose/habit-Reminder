@@ -17,11 +17,9 @@ public class EmailService {
         message.setTo(UserEmail);
         message.setSubject(emailSubject);
         message.setText(emailBody);
-        emailSender.send(message);
 
         try {
             emailSender.send(message);
-
         } catch (MailException e) {
             throw new RuntimeException("Failed to send email", e);
         }
