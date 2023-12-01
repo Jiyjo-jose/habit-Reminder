@@ -31,7 +31,6 @@ public class ReminderEmailService {
     }
 
     void scheduleEmail(ReminderDays reminder) {
-        //        LocalTime reminderTime = reminder.getHabit().getReminderTime();
         Habit habit = reminder.getHabit();
         if (habit != null) {
             LocalTime reminderTime = habit.getReminderTime();
