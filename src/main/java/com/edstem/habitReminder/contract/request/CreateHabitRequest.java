@@ -3,10 +3,10 @@ package com.edstem.habitReminder.contract.request;
 import jakarta.validation.constraints.Email;
 import java.time.LocalTime;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Data
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateHabitRequest {

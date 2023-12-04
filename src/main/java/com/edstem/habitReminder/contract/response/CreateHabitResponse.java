@@ -2,10 +2,10 @@ package com.edstem.habitReminder.contract.response;
 
 import java.time.LocalTime;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Data
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateHabitResponse {
