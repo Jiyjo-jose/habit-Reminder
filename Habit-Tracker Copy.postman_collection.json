@@ -1,0 +1,270 @@
+{
+	"info": {
+		"_postman_id": "f5ee9714-5129-4424-80d1-33969dd0a283",
+		"name": "Habit-Tracker Copy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30424741"
+	},
+	"item": [
+		{
+			"name": "createReminderDays",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"reminderDays\": [\"MONDAY\", \"WEDNESDAY\", \"FRIDAY\"],\n  \"endDate\":\"2023-12-12\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/habit/22/createReminderDays",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"habit",
+						"22",
+						"createReminderDays"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createHabit",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Morning Exercise\",\n  \"description\": \"Start the day with a quick workout\",\n  \"reminderTime\": \"08:00\",\n  \"email\":\"jiyjojose1@gmail.com\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/habit/createHabit",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"habit",
+						"createHabit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteHabit",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \n\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/habit/delete/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"habit",
+						"delete",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateHabit",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \n   \"name\": \"Morning Exercise new 'edited 5'\",\n  \"description\": \"Start the new day with a quick workout 'edited 5'\",\n  \"reminderTime\": \"10:37:05\",\n  \"email\": \"jiyjojose1@gmail.com\"\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/habit/14/editHabit",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"habit",
+						"14",
+						"editHabit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "viewAllHabits",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/habit/viewHabit?page=0&size=20&sort=habitId,asc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"habit",
+						"viewHabit"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "20"
+						},
+						{
+							"key": "sort",
+							"value": "habitId,asc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "markHabitAsCompletedForReminderDay",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/habit/14/reminderDays/48/complete",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"habit",
+						"14",
+						"reminderDays",
+						"48",
+						"complete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "viewCompletedReminder",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/habit/14/completedReminderDays",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"habit",
+						"14",
+						"completedReminderDays"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "viewIncompletedReminder",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/habit/14/incompleteReminderDays",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"habit",
+						"14",
+						"incompleteReminderDays"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "view reminderDays of a habit",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/habit/14/allReminderDays",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"habit",
+						"14",
+						"allReminderDays"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

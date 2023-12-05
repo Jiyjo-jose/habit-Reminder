@@ -20,27 +20,36 @@ public class ReminderEmailService {
     private final EmailService emailService;
     private final ThreadPoolTaskScheduler taskScheduler;
 
-    @Scheduled(fixedRate = 50000)
+    @Scheduled(fixedRate = 60000)
     public void sendReminderEmails() {
         LocalDate currentDate = LocalDate.now();
         List<ReminderDays> reminders = habitRepository.findActiveReminders(currentDate);
 
         for (ReminderDays reminder : reminders) {
+
+            if (isEndDateOver(reminder)) {
+                continue;
+            }
             scheduleEmail(reminder);
         }
+    }
+
+    private boolean isEndDateOver(ReminderDays reminder) {
+        LocalDate endDate = reminder.getEndDate();
+        return endDate != null && endDate.isBefore(LocalDate.now());
     }
 
     void scheduleEmail(ReminderDays reminder) {
         Habit habit = reminder.getHabit();
         if (habit != null) {
             LocalTime reminderTime = habit.getReminderTime();
-
             String cronExpression =
                     String.format(
-                            " %d %d %d * * ?",
+                            "%d %d %d ? * %d",
                             reminderTime.getSecond(),
                             reminderTime.getMinute(),
-                            reminderTime.getHour());
+                            reminderTime.getHour(),
+                            reminder.getDay().getValue());
             taskScheduler.schedule(() -> sendEmail(reminder), new CronTrigger(cronExpression));
         } else {
             System.out.println("Cannot schedule email. Habit is null.");
